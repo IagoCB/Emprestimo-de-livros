@@ -18,7 +18,7 @@ USE `mydb` ;
 -- Table `mydb`.`USUARIO`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`USUARIO` (
-  `CPF` INT NOT NULL,
+  `CPF` CHAR(11) NOT NULL,
   `nome` VARCHAR(50) NOT NULL,
   `email` VARCHAR(50) NOT NULL,
   `endereco` VARCHAR(50) NOT NULL,
@@ -31,7 +31,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`LIVRO`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`LIVRO` (
-  `idLIVRO` VARCHAR(45) NOT NULL,
+  `idLIVRO` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(50) NOT NULL,
   `autor` VARCHAR(50) NOT NULL,
   `USUARIO_CPF` INT NOT NULL,
@@ -49,7 +49,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`EMPRESTIMO`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`EMPRESTIMO` (
-  `idEMPRESTIMO` INT NOT NULL,
+  `idEMPRESTIMO` INT NOT NULL AUTO_INCREMENT,
   `retirada` DATETIME NOT NULL,
   `devolucao` DATETIME NOT NULL,
   `USUARIO_CPF` INT NOT NULL,
