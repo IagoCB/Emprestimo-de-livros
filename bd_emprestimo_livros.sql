@@ -18,7 +18,7 @@ USE `mydb` ;
 -- Table `mydb`.`USUARIO`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`USUARIO` (
-  `CPF` CHAR(11) NOT NULL,
+  `CPF` CHAR(12) NOT NULL,
   `nome` VARCHAR(50) NOT NULL,
   `email` VARCHAR(50) NOT NULL,
   `endereco` VARCHAR(50) NOT NULL,

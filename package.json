@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/IagoCB/Emprestimo-de-livros#readme",
   "dependencies": {
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "prompt-sync": "^4.2.0"
   }
 }
