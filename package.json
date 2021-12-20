@@ -4,7 +4,8 @@
   "description": "Repositório destinado ao desenvolvimento de um desafio baseado em empréstimo de livros. Utilizando Node.JS e MySQL.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,13 @@
   },
   "homepage": "https://github.com/IagoCB/Emprestimo-de-livros#readme",
   "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
