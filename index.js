@@ -29,19 +29,26 @@
   var user_cpf = entrada("Digite o cpf do dono: ");
   await db.insertLivro({titulo: titulo, autor:  autor, user_cpf: user_cpf});
 
-  //inserindo um emprestimo
+  //inserindo um empréstimo
   console.log("Vamos fazer um empréstimo!");
   var retirada = entrada("Digite a data e a hora da retirada (YYYY-MM-DD hh:mm:ss): ");
   var devolucao = entrada("Digite a data e a hora da devolução (YYYY-MM-DD hh:mm:ss): ");
   var user_cpf = entrada("Digite o cpf do realizador: ");
   await db.insertEmp({retirada: retirada, devolucao:  devolucao, user_cpf: user_cpf});
 
-  //inserido a ligação entre o pedido do emprestimo e qual livro será
+  //inserido a ligação entre o pedido do empréstimo e qual livro será
   var idEMP = entrada("Digite o código do empréstimo: ");
   var cpfEMP = entrada("Digite o cpf do realizador: ");
   var idLIVRO = entrada("Digite o código do livro: ");
   var cpfLIVRO = entrada("Digite o cpf do dono do livro: ");
-  await db.insertLigacao({idEMP: idEMP, cpfEMP:  cpfEMP, idLIVRO: idLIVRO, cpfLIVRO: cpfLIVRO});
+  await db.insertLigacao({idEMP: idEMP, cpfEMP:  cpfEMP, idLIVRO: idLIVRO, cpfLIVRO: cpfLIVRO})
 
+  //deletar um empréstimo(realizar uma devolução)
+  console.log("Vamos fazer uma devolução!");
+  var id_emp = entrada("Digite o código do pedido de empréstimo: ");
+  await db.deleteLigacao(id_emp);
+  await db.deleteEmp(id_emp);  
+  console.log("Devolução bem sucedida!");
+  
   
 })();

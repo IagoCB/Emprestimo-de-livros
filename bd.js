@@ -32,7 +32,7 @@ async function insertLivro(book){
     await conn.query(sql, values);
 }
 
-//função assíncrona para inserção de um emprestimo no banco de dados
+//função assíncrona para inserção de um empréstimo no banco de dados
 async function insertEmp(emp){
     const conn = await connect();
     const sql = 'INSERT INTO EMPRESTIMO(retirada, devolucao, USUARIO_CPF) VALUES (?,?,?);';
@@ -40,7 +40,7 @@ async function insertEmp(emp){
     await conn.query(sql, values);
 }
 
-//função assíncrona para inserção de um emprestimo no banco de dados
+//função assíncrona para inserção de uma ligação do pedido de empréstimo com o livro que vai ser emprestado no banco de dados
 async function insertLigacao(lig){
     const conn = await connect();
     const sql = 'INSERT INTO EMPRESTIMO_LIVRO(EMPRESTIMO_idEMPRESTIMO, EMPRESTIMO_USUARIO_CPF, LIVRO_idLIVRO, LIVRO_USUARIO_CPF) VALUES (?,?,?,?);';
@@ -48,5 +48,19 @@ async function insertLigacao(lig){
     await conn.query(sql, values);
 }
 
+//função assíncrona para deletar um pedido de empréstimo do banco de dados (devolução)
+async function deleteEmp(idEMP){
+    const conn = await connect();
+    const sql = 'DELETE FROM EMPRESTIMO where idEMPRESTIMO= ?;';
+    return await conn.query(sql, [idEMP]);    
+}
+
+//função assíncrona para deletar a ligação entre o pedido de empréstimo e o livro do banco de dados (devolução parte 2)
+async function deleteLigacao(idEMP_lig){
+    const conn = await connect();
+    const sql = 'DELETE FROM EMPRESTIMO_LIVRO where EMPRESTIMO_idEMPRESTIMO= ?;';
+    return await conn.query(sql, [idEMP_lig]);    
+}
+
 //exportando módulos
-module.exports = {insertUser, selectUser, insertLivro, insertEmp, insertLigacao}
+module.exports = {insertUser, selectUser, insertLivro, insertEmp, insertLigacao, deleteEmp, deleteLigacao}
