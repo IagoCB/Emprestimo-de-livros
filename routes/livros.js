@@ -19,10 +19,26 @@ router.post('/', (req, res, next) => {
                     });                    
                 }
 
-                res.status(201).send({
-                    mensagem: 'Livro inserido com sucesso',
-                    idLIVRO: resultado.insertId                    
-                });
+                const response ={
+                    mensagem: 'Livro registrado com sucesso',
+                    livroRegistrado: {                        
+                        titulo: req.body.titulo,
+                        autor: req.body.autor,
+                        dono: req.body.user_cpf,                        
+                        request:{
+                            tipo: 'POST',
+                            descricao: 'Cadastrar um novo livros',
+                            url: 'http://localhost:3000/livros',
+                            body:{
+                                titulo: "VARCHAR",
+                                autor: "VARCHAR",
+                                cpf_dono: "CHAR(12)"                                
+                            }  
+                        }
+                    }
+                }
+
+                return res.status(201).send(response);
             }
         )
     });

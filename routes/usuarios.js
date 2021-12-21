@@ -20,9 +20,23 @@ router.post('/', (req, res, next) => {
                     });                    
                 }
 
-                res.status(201).send({
-                    mensagem: 'Usuario inserido com sucesso'                    
-                });
+                const response ={
+                    mensagem: 'Usuario cadastrado com sucesso',
+                    usuarioCriado: {
+                        cpf: req.body.cpf,
+                        nome: req.body.nome,
+                        email: req.body.email,
+                        endereco: req.body.endereco,
+                        telefone: req.body.telefone,
+                        request:{
+                            tipo: 'GET',
+                            descricao: 'Buscar informações de um usuário específico',
+                            url: 'http://localhost:3000/usuarios/' + req.body.cpf
+                        }
+                    }
+                }
+
+                return res.status(201).send(response);
             }
         )
     });
@@ -38,7 +52,37 @@ router.get('/:cpf', (req, res, next) => {
             [req.params.cpf],
             (error, resultado, fields) => {
                 if(error){return res.status(500).send({ error: error })}
-                return res.status(200).send({respinse: resultado})
+
+                if(resultado.length == 0){
+                    return res.status(404).send({
+                        mensagem: 'Não foi encontrado um usuário com esse cpf'
+                    })
+                }
+
+                const response ={
+                    mensagem: 'Informações do usuário',
+                    usuario: {
+                        cpf: req.params.cpf,
+                        nome: resultado[0].nome,
+                        email: resultado[0].email,
+                        endereco: resultado[0].endereco,
+                        telefone: resultado[0].telefone,
+                        request:{
+                            tipo: 'POST',
+                            descricao: 'Cadastrar um novo usuário',
+                            url: 'http://localhost:3000/usuarios',
+                            body:{
+                                cpf: "CHAR(12)",
+                                nome: "VARCHAR",
+                                email: "VARCHAR",
+                                endereco: "VARCHAR",
+                                telefone: "VARCHAR"
+                            } 
+                        }
+                    }
+                }
+
+                return res.status(200).send(response);                
             }
         )
 

@@ -7,9 +7,9 @@ router.post('/', (req, res, next) => {
     mysql.getConnection((error, conn) =>{
         if(error){return res.status(500).send({ error: error })}
         conn.query(
-            'INSERT INTO EMPRESTIMO(retirada, devolucao, USUARIO_CPF) VALUES (?,?,?);',
+            'INSERT INTO EMPRESTIMO(retirada, devolucao, USUARIO_CPF) VALUES (?,?,?)',
             [req.body.retirada, req.body.devolucao, req.body.user_cpf],
-            (error, resultado, field) =>{
+            (error, result, field) =>{
                 conn.release();
 
                 if(error){
@@ -19,10 +19,24 @@ router.post('/', (req, res, next) => {
                     });                    
                 }
 
-                res.status(201).send({
-                    mensagem: 'Pedido de empréstimo bem sucedido',
-                    idEMPRESTIMO: resultado.insertId                    
-                });
+                const response ={
+                    mensagem: 'Pedido de emprestimo realizado',
+                    pedidoCriado: {                        
+                        retirada: req.body.retirada,
+                        devolucao: req.body.devolucao,
+                        cpf: req.body.user_cpf,                        
+                        request:{
+                            tipo: 'POST',
+                            descricao: 'Infromar qual o livro',
+                            url: 'http://localhost:3000/emprestimos/undefined',
+                            body:{
+                                idLIVRO: 'INT'                                  
+                            }
+                        }
+                    }
+                }
+
+                return res.status(201).send(response);                
             }
         )
     });
@@ -44,9 +58,25 @@ router.post('/:idEMPRESTIMO', (req, res, next) => {
                     });                    
                 }
 
-                res.status(201).send({
-                    mensagem: 'Pedido de empréstimo bem sucedido'                                       
-                });
+                const response ={
+                    mensagem: 'Livro definido',
+                    pedidoConcluido: {                        
+                        idEMPRESTIMO: req.params.idEMPRESTIMO,
+                        idLIVRO: req.body.idLIVRO,                                              
+                        request:{
+                            tipo: 'POST',
+                            descricao: 'Fazer um pedido',
+                            url: 'http://localhost:3000/emprestimos',
+                            body:{
+                                retirada: 'DATETIME',
+                                devolucao: 'DATETIME', 
+                                user_cpf: 'CHAR(12)'      
+                            }
+                        }
+                    }
+                }
+
+                res.status(201).send(response);
             }
         )
     });
@@ -88,9 +118,21 @@ router.delete('/', (req, res, next) => {
                     });                    
                 }
 
-                res.status(202).send({
-                    mensagem: 'Devolução bem sucedida'
-                });
+                const response = {
+                    mensagem: 'Devolução bem sucedida',
+                    request:{
+                        tipo: 'POST',
+                        descricao: 'Fazer um pedido',
+                        url: 'http://localhost:3000/emprestimos',
+                        body:{
+                            retirada: 'DATETIME',
+                            devolucao: 'DATETIME', 
+                            user_cpf: 'CHAR(12)'      
+                        }
+                    }
+                }
+
+                res.status(202).send(response);
             }
         )
     });
