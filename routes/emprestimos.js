@@ -27,7 +27,7 @@ router.post('/', (req, res, next) => {
                         cpf: req.body.user_cpf,                        
                         request:{
                             tipo: 'POST',
-                            descricao: 'Infromar qual o livro',
+                            descricao: 'Informar qual o livro',
                             url: 'http://localhost:3000/emprestimos/undefined',
                             body:{
                                 idLIVRO: 'INT'                                  
