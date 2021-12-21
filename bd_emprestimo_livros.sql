@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema desafio
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema desafio
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `desafio` DEFAULT CHARACTER SET utf8 ;
+USE `desafio` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`USUARIO`
+-- Table `desafio`.`USUARIO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`USUARIO` (
+CREATE TABLE IF NOT EXISTS `desafio`.`USUARIO` (
   `CPF` CHAR(12) NOT NULL,
   `nome` VARCHAR(50) NOT NULL,
   `email` VARCHAR(50) NOT NULL,
@@ -28,60 +28,58 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`LIVRO`
+-- Table `desafio`.`LIVRO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`LIVRO` (
+CREATE TABLE IF NOT EXISTS `desafio`.`LIVRO` (
   `idLIVRO` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(50) NOT NULL,
   `autor` VARCHAR(50) NOT NULL,
   `USUARIO_CPF` CHAR(12) NOT NULL,
-  PRIMARY KEY (`idLIVRO`, `USUARIO_CPF`),
+  PRIMARY KEY (`idLIVRO`),
   INDEX `fk_LIVRO_USUARIO1_idx` (`USUARIO_CPF` ASC) VISIBLE,
   CONSTRAINT `fk_LIVRO_USUARIO1`
     FOREIGN KEY (`USUARIO_CPF`)
-    REFERENCES `mydb`.`USUARIO` (`CPF`)
+    REFERENCES `desafio`.`USUARIO` (`CPF`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`EMPRESTIMO`
+-- Table `desafio`.`EMPRESTIMO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`EMPRESTIMO` (
+CREATE TABLE IF NOT EXISTS `desafio`.`EMPRESTIMO` (
   `idEMPRESTIMO` INT NOT NULL AUTO_INCREMENT,
   `retirada` DATETIME NOT NULL,
   `devolucao` DATETIME NOT NULL,
   `USUARIO_CPF` CHAR(12) NOT NULL,
-  PRIMARY KEY (`idEMPRESTIMO`, `USUARIO_CPF`),
+  PRIMARY KEY (`idEMPRESTIMO`),
   INDEX `fk_EMPRESTIMO_USUARIO1_idx` (`USUARIO_CPF` ASC) VISIBLE,
   CONSTRAINT `fk_EMPRESTIMO_USUARIO1`
     FOREIGN KEY (`USUARIO_CPF`)
-    REFERENCES `mydb`.`USUARIO` (`CPF`)
+    REFERENCES `desafio`.`USUARIO` (`CPF`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`EMPRESTIMO_LIVRO`
+-- Table `desafio`.`EMPRESTIMO_LIVRO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`EMPRESTIMO_LIVRO` (
+CREATE TABLE IF NOT EXISTS `desafio`.`EMPRESTIMO_LIVRO` (
   `EMPRESTIMO_idEMPRESTIMO` INT NOT NULL,
-  `EMPRESTIMO_USUARIO_CPF` CHAR(12) NOT NULL,
   `LIVRO_idLIVRO` INT NOT NULL,
-  `LIVRO_USUARIO_CPF` CHAR(12) NOT NULL,
-  PRIMARY KEY (`EMPRESTIMO_idEMPRESTIMO`, `EMPRESTIMO_USUARIO_CPF`, `LIVRO_idLIVRO`, `LIVRO_USUARIO_CPF`),
-  INDEX `fk_EMPRESTIMO_has_LIVRO_LIVRO1_idx` (`LIVRO_idLIVRO` ASC, `LIVRO_USUARIO_CPF` ASC) VISIBLE,
-  INDEX `fk_EMPRESTIMO_has_LIVRO_EMPRESTIMO1_idx` (`EMPRESTIMO_idEMPRESTIMO` ASC, `EMPRESTIMO_USUARIO_CPF` ASC) VISIBLE,
+  PRIMARY KEY (`EMPRESTIMO_idEMPRESTIMO`, `LIVRO_idLIVRO`),
+  INDEX `fk_EMPRESTIMO_has_LIVRO_LIVRO1_idx` (`LIVRO_idLIVRO` ASC) VISIBLE,
+  INDEX `fk_EMPRESTIMO_has_LIVRO_EMPRESTIMO1_idx` (`EMPRESTIMO_idEMPRESTIMO` ASC) VISIBLE,
   CONSTRAINT `fk_EMPRESTIMO_has_LIVRO_EMPRESTIMO1`
-    FOREIGN KEY (`EMPRESTIMO_idEMPRESTIMO` , `EMPRESTIMO_USUARIO_CPF`)
-    REFERENCES `mydb`.`EMPRESTIMO` (`idEMPRESTIMO` , `USUARIO_CPF`)
+    FOREIGN KEY (`EMPRESTIMO_idEMPRESTIMO`)
+    REFERENCES `desafio`.`EMPRESTIMO` (`idEMPRESTIMO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_EMPRESTIMO_has_LIVRO_LIVRO1`
-    FOREIGN KEY (`LIVRO_idLIVRO` , `LIVRO_USUARIO_CPF`)
-    REFERENCES `mydb`.`LIVRO` (`idLIVRO` , `USUARIO_CPF`)
+    FOREIGN KEY (`LIVRO_idLIVRO`)
+    REFERENCES `desafio`.`LIVRO` (`idLIVRO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
