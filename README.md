@@ -3,7 +3,7 @@
 <h2 align="center">Conteúdo</h2>
 <p align="center"><a href="#Descrição">📝 Descrição</a> • <a href="#Requisitos">📥 Requisitos</a> • <a href="#Como-executar">🧩 Como executar</a></p>
 
-# 📝 Descrição <a name="Descrição"></a>
+## 📝 Descrição <a name="Descrição"></a>
 
 O projeto, para o processo seletivo da empresa Nouvenn, consiste na implementação de uma aplicação para empréstimo de livros na qual é possível realizar cinco funcionalidades básicas:
 <br>
@@ -14,7 +14,7 @@ O projeto, para o processo seletivo da empresa Nouvenn, consiste na implementaç
 4. Devolver um livro;
 5. Acessar informações de um usuário;
 
-# 📥 Requisitos <a name="Requisitos"></a>
+## 📥 Requisitos <a name="Requisitos"></a>
 1. Instalar o [Node.JS](https://nodejs.org/en/download/).
 2. Instalar o [MySQL](https://dev.mysql.com/downloads/installer/).
 3. Foi utilizado o [Postman](https://www.postman.com/downloads/) para realizar os testes e as requisições.
